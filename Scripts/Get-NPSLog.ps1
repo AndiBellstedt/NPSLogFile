@@ -7,6 +7,12 @@
        Get NPS logfiles and put it into readable powershell objects. 
        All available logfile formats from NPS are supportet by parameter 'Format'.
 
+    .INPUTS
+       Cmdlet accept string values. Pipelineinput has to be the path to a logfile
+
+    .OUTPUTS
+       Cmdlet outputs a custom psobject with own typename in namespace NPS.LogFile
+
     .NOTES
        Version:     2.0.0.0
        Author:      Andreas Bellstedt
@@ -45,8 +51,29 @@
        https://github.com/AndiBellstedt/
 
     .EXAMPLE
-       New-Function
-       This is a new function
+       Get-NPSLog C:\Windows\System32\LogFiles\IN170901.log
+       By default the cmdlet will get the entries from the logfile in DTS format with UTF8 encoding.
+
+    .EXAMPLE
+       Get-NPSLog -Path C:\Windows\System32\LogFiles\IN170901.log -Format DTS -Encoding UTF8
+       This is an example of the even more specific call for the cmdlet. From the functional point, is it the same from Example 1.
+
+    .EXAMPLE
+       Get-NPSLog -Path C:\Windows\System32\LogFiles\IN170901.log -Format IAS -Encoding UTF8
+       This will get the entries from the logfile in IAS format with UTF8 encoding.
+
+    .EXAMPLE
+       Get-NPSLog -Path C:\Windows\System32\LogFiles\IN170901.log -Format ODBC -Encoding UTF8
+       This will get the entries from the logfile in ODBC format with UTF8 encoding.
+
+    .EXAMPLE
+       Get-NPSLog -Path C:\Windows\System32\LogFiles\IN170901.log -Format DTS -Encoding UTF8 -Filter Access-Reject, Access-Accept
+       This will return only "reject" and "accept" entries from the logfile.
+       Adding filter parameter will slightly speed up the parsing of larger files.
+
+    .EXAMPLE
+       Get-ChildItem C:\Windows\System32\LogFiles\IN*.log | Get-NPSLog
+       Parse all logfiles from "C:\Windows\System32\LogFiles". The cmdlet assumes the files in DTS format with UTF8 encoding, because the is the default.
 
     #>
     [CmdletBinding(DefaultParameterSetName = 'DefaultParameterSet',
