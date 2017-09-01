@@ -1,0 +1,712 @@
+﻿<Types>
+    <Type>
+    <Name>NPS.LogFile</Name>
+    <Members>
+        <ScriptProperty>
+            <Name>PacketTypeName</Name>
+            <GetScriptBlock>
+                [NPS.LogFile.Lookup]::PacketTypes[([int]$this.PacketType)]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>ReasonCodeName</Name>
+            <GetScriptBlock>
+                [NPS.LogFile.Lookup]::ReasonCodes[([int]$this.ReasonCode)]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>AuthenticationTypeName</Name>
+            <GetScriptBlock>
+                [NPS.LogFile.Lookup]::AuthenticationTypes[([int]$this.AuthenticationType)] 
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>NasPortTypeName</Name>
+            <GetScriptBlock>
+                [NPS.LogFile.Lookup]::NasPortTypes[([int]$this.NASPortType)] 
+            </GetScriptBlock>
+        </ScriptProperty>
+
+    </Members>
+    </Type>
+    
+    <Type>
+    <Name>NPS.LogFile.DTS</Name>
+    <Members>
+        <ScriptProperty>
+            <Name>ProviderTypeName</Name>
+            <GetScriptBlock>
+                [NPS.LogFile.Lookup]::AuthenticationSource[([int]$this.ProviderType)] 
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>EventTimestamp</Name>
+            <GetScriptBlock>
+                if($this.Timestamp -match '^(?&lt;month>\d+)\/(?&lt;day>\d+)\/(?&lt;year>\d+) (?&lt;hour>\d+):(?&lt;minute>\d+):(?&lt;second>\d+)\.(?&lt;millisecond>\d+)') {
+                    "$($Matches['year'])-$($Matches['month'])-$($Matches['day'])T$($Matches['hour']):$($Matches['minute']):$($Matches['second']).$($Matches['millisecond'])" -as [datetime]
+                } else {
+                    $this.Timestamp -as [datetime]
+                }
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>RecordDate</Name>
+            <GetScriptBlock>
+                ($this.EventTimestamp).ToString('MM/dd/yyyy')
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>RecordTime</Name>
+            <GetScriptBlock>
+                ($this.EventTimestamp).ToString('HH:mm:ss')
+            </GetScriptBlock>
+        </ScriptProperty>
+
+    </Members>
+    </Type>
+    
+    <Type>
+    <Name>NPS.LogFile.IAS</Name>
+    <Members>
+        <ScriptProperty>
+            <Name>PacketTypeName</Name>
+            <GetScriptBlock>
+                $this.PacketType
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>ReasonCodeName</Name>
+            <GetScriptBlock>
+                $this.ReasonCode
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>AuthenticationTypeName</Name>
+            <GetScriptBlock>
+                $this.AuthenticationType
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>NasPortTypeName</Name>
+            <GetScriptBlock>
+                $this.NASPortType
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>Timestamp</Name>
+            <GetScriptBlock>
+                $this.RecordDate + " " + $this.RecordTime
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>EventTimestamp</Name>
+            <GetScriptBlock>
+                if($this.Timestamp -match '^(?&lt;month>\d+)\/(?&lt;day>\d+)\/(?&lt;year>\d+) (?&lt;hour>\d+):(?&lt;minute>\d+):(?&lt;second>\d+)') {
+                    "$($Matches['year'])-$($Matches['month'])-$($Matches['day'])T$($Matches['hour']):$($Matches['minute']):$($Matches['second'])" -as [datetime]
+                } else {
+                    $this.Timestamp -as [datetime]
+                }
+            </GetScriptBlock>
+        </ScriptProperty>
+
+
+    </Members>
+    </Type>
+
+    <Type>
+    <Name>NPS.LogFile.ODBC</Name>
+    <Members>
+        
+        <ScriptProperty>
+            <Name>ComputerName</Name>
+            <GetScriptBlock>
+                $this.event[0]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>ServiceName</Name>
+            <GetScriptBlock>
+                $this.event[1]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>RecordDate</Name>
+            <GetScriptBlock>
+                $this.event[2]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>RecordTime</Name>
+            <GetScriptBlock>
+                $this.event[3]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>PacketType</Name>
+            <GetScriptBlock>
+                $this.event[4]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>UserName</Name>
+            <GetScriptBlock>
+                $this.event[5]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>FullyQualifiedDistinguishedName</Name>
+            <GetScriptBlock>
+                $this.event[6]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>CalledStationID</Name>
+            <GetScriptBlock>
+                $this.event[7]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>CallingStationID</Name>
+            <GetScriptBlock>
+                $this.event[8]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>CallbackNumber</Name>
+            <GetScriptBlock>
+                $this.event[9]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>FramedIPAddress</Name>
+            <GetScriptBlock>
+                $this.event[10]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>NASIdentifier</Name>
+            <GetScriptBlock>
+                $this.event[11]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>NASIPAddress</Name>
+            <GetScriptBlock>
+                $this.event[12]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>NASPort</Name>
+            <GetScriptBlock>
+                $this.event[13]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>ClientVendor</Name>
+            <GetScriptBlock>
+                $this.event[14]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>ClientIPAddress</Name>
+            <GetScriptBlock>
+                $this.event[15]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>ClientFriendlyName</Name>
+            <GetScriptBlock>
+                $this.event[16]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>EventTimestamp</Name>
+            <GetScriptBlock>
+                if($this.event[17]) {
+                    $this.event[17]
+                } else {
+                    if($this.Timestamp -match '^(?&lt;month>\d+)\/(?&lt;day>\d+)\/(?&lt;year>\d+) (?&lt;hour>\d+):(?&lt;minute>\d+):(?&lt;second>\d+)') {
+                        "$($Matches['year'])-$($Matches['month'])-$($Matches['day'])T$($Matches['hour']):$($Matches['minute']):$($Matches['second'])" -as [datetime]
+                    } else {
+                        $this.Timestamp -as [datetime]
+                    }
+                }
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>PortLimit</Name>
+            <GetScriptBlock>
+                $this.event[18]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>NASPortType</Name>
+            <GetScriptBlock>
+                $this.event[19]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>ConnectInfo</Name>
+            <GetScriptBlock>
+                $this.event[20]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>FramedProtocol</Name>
+            <GetScriptBlock>
+                $this.event[21]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>ServiceType</Name>
+            <GetScriptBlock>
+                $this.event[22]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>AuthenticationType</Name>
+            <GetScriptBlock>
+                $this.event[23]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>PolicyName</Name>
+            <GetScriptBlock>
+                $this.event[24]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>ReasonCode</Name>
+            <GetScriptBlock>
+                $this.event[25]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>Class</Name>
+            <GetScriptBlock>
+                $this.event[26]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>SessionTimeout</Name>
+            <GetScriptBlock>
+                $this.event[27]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>IdleTimeout</Name>
+            <GetScriptBlock>
+                $this.event[28]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>TerminationAction</Name>
+            <GetScriptBlock>
+                $this.event[29]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>EAPFriendlyName</Name>
+            <GetScriptBlock>
+                $this.event[30]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>AcctStatusType</Name>
+            <GetScriptBlock>
+                $this.event[31]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>AcctDelayTime</Name>
+            <GetScriptBlock>
+                $this.event[32]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>AcctInputOctets</Name>
+            <GetScriptBlock>
+                $this.event[33]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>AcctOutputOctets</Name>
+            <GetScriptBlock>
+                $this.event[34]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>AcctSessionId</Name>
+            <GetScriptBlock>
+                $this.event[35]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>AcctAuthentic</Name>
+            <GetScriptBlock>
+                $this.event[36]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>AcctSessionTime</Name>
+            <GetScriptBlock>
+                $this.event[37]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>AcctInputPackets</Name>
+            <GetScriptBlock>
+                $this.event[38]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>AcctOutputPackets</Name>
+            <GetScriptBlock>
+                $this.event[39]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>AcctTerminateCause</Name>
+            <GetScriptBlock>
+                $this.event[40]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>AcctMultiSsnID</Name>
+            <GetScriptBlock>
+                $this.event[41]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>AcctLinkCount</Name>
+            <GetScriptBlock>
+                $this.event[42]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>AcctInterimInterval</Name>
+            <GetScriptBlock>
+                $this.event[43]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>TunnelType</Name>
+            <GetScriptBlock>
+                $this.event[44]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>TunnelMediumType</Name>
+            <GetScriptBlock>
+                $this.event[45]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>TunnelClientEndpt</Name>
+            <GetScriptBlock>
+                $this.event[46]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>TunnelServerEndpt</Name>
+            <GetScriptBlock>
+                $this.event[47]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>AcctTunnelConn</Name>
+            <GetScriptBlock>
+                $this.event[48]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>TunnelPvtGroupID</Name>
+            <GetScriptBlock>
+                $this.event[49]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>TunnelAssignmentID</Name>
+            <GetScriptBlock>
+                $this.event[50]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>TunnelPreference</Name>
+            <GetScriptBlock>
+                $this.event[51]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>MSAcctAuthType</Name>
+            <GetScriptBlock>
+                $this.event[52]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>MSAcctEAPType</Name>
+            <GetScriptBlock>
+                $this.event[53]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>MSRASVersion</Name>
+            <GetScriptBlock>
+                $this.event[54]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>MSRASVendor</Name>
+            <GetScriptBlock>
+                $this.event[55]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>MSCHAPError</Name>
+            <GetScriptBlock>
+                $this.event[56]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>MSCHAPDomain</Name>
+            <GetScriptBlock>
+                $this.event[57]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>MSMPPEEncryptionTypes</Name>
+            <GetScriptBlock>
+                $this.event[58]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>MSMPPEEncryptionPolicy</Name>
+            <GetScriptBlock>
+                $this.event[59]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>ProxyPolicyName</Name>
+            <GetScriptBlock>
+                $this.event[60]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>ProviderType</Name>
+            <GetScriptBlock>
+                $this.event[61]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>ProviderName</Name>
+            <GetScriptBlock>
+                $this.event[62]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>RemoteServerAddress</Name>
+            <GetScriptBlock>
+                $this.event[63]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>MSRASClientName</Name>
+            <GetScriptBlock>
+                $this.event[64]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        
+        <ScriptProperty>
+            <Name>MSRASClientVersion</Name>
+            <GetScriptBlock>
+                $this.event[65]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>NpPolicyName</Name>
+            <GetScriptBlock>
+                $this.PolicyName
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>Timestamp</Name>
+            <GetScriptBlock>
+                $this.RecordDate + " " + $this.RecordTime
+            </GetScriptBlock>
+        </ScriptProperty>
+
+
+        <ScriptProperty>
+            <Name>PacketTypeName</Name>
+            <GetScriptBlock>
+                [NPS.LogFile.Lookup]::PacketTypes[([int]$this.PacketType)]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>ReasonCodeName</Name>
+            <GetScriptBlock>
+                [NPS.LogFile.Lookup]::ReasonCodes[([int]$this.ReasonCode)]
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>AuthenticationTypeName</Name>
+            <GetScriptBlock>
+                [NPS.LogFile.Lookup]::AuthenticationTypes[([int]$this.AuthenticationType)] 
+            </GetScriptBlock>
+        </ScriptProperty>
+
+        <ScriptProperty>
+            <Name>NasPortTypeName</Name>
+            <GetScriptBlock>
+                [NPS.LogFile.Lookup]::NasPortTypes[([int]$this.NASPortType)] 
+            </GetScriptBlock>
+        </ScriptProperty>
+
+    </Members>
+    </Type>
+
+</Types>
