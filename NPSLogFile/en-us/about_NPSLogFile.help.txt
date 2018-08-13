@@ -1,0 +1,11 @@
+TOPIC
+	about_NPSLogFile
+	
+SHORT DESCRIPTION
+	Explains how to use the NPSLogFile powershell module
+	
+LONG DESCRIPTION
+	<Insert Content here>
+
+KEYWORDS
+	NPSLogFile

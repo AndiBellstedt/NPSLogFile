@@ -1,41 +1,16 @@
-﻿#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-# Modul "NPSLogFile"
-# Author:  Andreas Bellstedt
+<#
+This is an example configuration file
 
-#region type defintion
-#---------------------
-Add-Type -TypeDefinition @"
-namespace NPS {
-    namespace LogFile {
-        public static class Cache {
-            public static System.Collections.Hashtable Data = new System.Collections.Hashtable();
-        }
+By default, it is enough to have a single one of them,
+however if you have enough configuration settings to justify having multiple copies of it,
+feel totally free to split them into multiple files.
+#>
 
-        public static class Lookup {
-            public static System.Collections.Hashtable AuthenticationSource = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable AuthenticationTypes = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable FilterPacketTypes = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable NasPortTypes = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable PacketTypes = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable ReasonCodes = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable IasAttributeTypes = new System.Collections.Hashtable();
-        }
-    }
-}
-"@
+<#
+# Example Configuration
+Set-PSFConfig -Module 'NPSLogFile' -Name 'Example.Setting' -Value 10 -Initialize -Validation 'integer' -Handler { } -Description "Example configuration setting. Your module can then use the setting using 'Get-PSFConfigValue'"
+#>
 
-#endregion type defintion
-
-
-#region Constants
-#--------------------------
-New-Variable -Option ReadOnly, Constant -Scope Script -Name BaseType -Value "NPS.LogFile"
 
 [NPS.LogFile.Lookup]::FilterPacketTypes = @{
     'Access-Request'                             = 1
@@ -1161,19 +1136,3 @@ http://www.deepsoftware.com/iasviewer/attributeslist.html
     "8165" = "User-IPv6-Address"
     "8166" = "TSG-Device-Redirection"
 }
-
-#endregion
-
-#region basic functions
-#----------------------
-. $psscriptroot\scripts\Get-NPSLog.ps1
-
-#endregion
-
-
-#region Helper functions
-#-----------------------
-
-#endregion
-
-Export-ModuleMember -Function *-NPS**
