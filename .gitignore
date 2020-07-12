@@ -14,3 +14,6 @@ NPSLogFile/NPSLogFile.psproj
 NPSLogFile/NPSLogFile.psproj.bak
 NPSLogFile/NPSLogFile.psprojs
 NPSLogFile/NPSLogFile.psproj
+
+# ignore pester test result files
+TestResults/*
