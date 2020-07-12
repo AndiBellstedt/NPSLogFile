@@ -1,4 +1,4 @@
-<#
+﻿<#
 This is an example configuration file
 
 By default, it is enough to have a single one of them,
@@ -464,7 +464,7 @@ http://www.deepsoftware.com/iasviewer/attributeslist.html
             "11"    = "Bay Dial Virtual Services (DVS)"
             "12"    = "IP-in-IP Tunneling"
             "13"    = "Virtual LANs (VLAN)"
-            "79617" = "Secure Socket Tunneling Protocol (SSTP)"            
+            "79617" = "Secure Socket Tunneling Protocol (SSTP)"
         }
     }
     "65"   = @{
@@ -867,7 +867,7 @@ http://www.deepsoftware.com/iasviewer/attributeslist.html
         Name       = "Reason-Code"
         Enumerator = @{
             "0"   = "Success"
-            "1"   = "Internal error" 
+            "1"   = "Internal error"
             "2"   = "Access denied"
             "3"   = "Malformed request"
             "4"   = "Global catalog unavailable"
@@ -887,7 +887,7 @@ http://www.deepsoftware.com/iasviewer/attributeslist.html
             "23"  = "Unexpected error. Possible error in server or client configuration."
             "32"  = "Local users only"
             "33"  = "Password must be changed"
-            "34"  = "Account disabled" 
+            "34"  = "Account disabled"
             "35"  = "Account expired"
             "36"  = "Account locked out"
             "37"  = "Logon hours are not valid"
@@ -897,7 +897,7 @@ http://www.deepsoftware.com/iasviewer/attributeslist.html
             "64"  = "Dial-in locked out"
             "65"  = "Dial-in disabled"
             "66"  = "Authentication type is not valid"
-            "67"  = "Calling station is not valid" 
+            "67"  = "Calling station is not valid"
             "68"  = "Dial-in hours are not valid"
             "69"  = "Called station is not valid"
             "70"  = "Port type is not valid"

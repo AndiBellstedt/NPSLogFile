@@ -4,7 +4,7 @@
        Get NPS logfiles in various formats.
 
     .DESCRIPTION
-       Get NPS logfiles and put it into readable powershell objects. 
+       Get NPS logfiles and put it into readable powershell objects.
        All available logfile formats from NPS are supportet by parameter 'Format'.
 
     .INPUTS
@@ -20,7 +20,7 @@
                     13.08.2017 - Change/enhance filter method
                     20.08.2017 - Add runspace processing for faster support of larger files
                                  Clearing up the function and building a module
-                    22.08.2017 - remove not needed code and outcommended test stuff 
+                    22.08.2017 - remove not needed code and outcommended test stuff
                     27.08.2017 - Change processing of file content, using type system to speed up record processing
                                  Add name of the logfile as property to output item
                                  Finished funtion for reading DTS logs.
@@ -34,7 +34,7 @@
        DTS format --> https://technet.microsoft.com/en-us/library/cc771748(v=ws.10).aspx#Anchor_1
        IAS format --> https://technet.microsoft.com/de-de/library/dd197432(v=ws.10).aspx
        ODBC format --> https://technet.microsoft.com/en-us/library/cc771748(v=ws.10).aspx
-       RADIUS Packet format --> https://technet.microsoft.com/en-us/library/cc958030.aspx  
+       RADIUS Packet format --> https://technet.microsoft.com/en-us/library/cc958030.aspx
        IANA defintion --> http://www.iana.org/assignments/radius-types/radius-types.xhtml
        Health Validator Records interpretierne --> https://technet.microsoft.com/en-us/library/cc730901(v=ws.10).aspx
 
@@ -49,6 +49,26 @@
 
     .LINK
        https://github.com/AndiBellstedt/
+
+    .PARAMETER Path
+        The logfile to gather data from.
+
+    .PARAMETER Format
+        The format of the nps logfile.
+        Default is DTS.
+
+    .PARAMETER Filter
+        Allow to filter on specific events in the NPS log.
+
+    .PARAMETER Encoding
+        Specifies the file encoding of the logfile.
+        Default is UTF8
+
+    .PARAMETER Confirm
+        If this switch is enabled, you will be prompted for confirmation before executing any operations that change state.
+
+    .PARAMETER WhatIf
+        If this switch is enabled, no actions are performed but informational messages will be displayed that explain what would happen if the command were to run.
 
     .EXAMPLE
        Get-NPSLog C:\Windows\System32\LogFiles\IN170901.log
@@ -81,7 +101,6 @@
         PositionalBinding = $true,
         ConfirmImpact = 'Low')]
     Param(
-        #Parameter help
         [Parameter(Mandatory = $true,
             ParameterSetName = 'DefaultParameterSet',
             ValueFromPipeline = $true,
@@ -91,17 +110,15 @@
         [String[]]
         $Path,
 
-        #Parameter help
         [Parameter(Mandatory = $false,
             ParameterSetName = 'DefaultParameterSet',
             ValueFromPipeline = $false,
             ValueFromPipelineByPropertyName = $false)]
         [ValidateNotNullOrEmpty()]
-        [ValidateSet('DTS', 'IAS', 'ODBC')] 
+        [ValidateSet('DTS', 'IAS', 'ODBC')]
         [String]
         $Format = 'DTS',
-        
-        #Parameter help
+
         [Parameter(Mandatory = $false,
             ParameterSetName = 'DefaultParameterSet',
             ValueFromPipeline = $false,
@@ -110,7 +127,6 @@
         [String[]]
         $Filter,
 
-        #Parameter help
         [Parameter(Mandatory = $false,
             ParameterSetName = 'DefaultParameterSet',
             ValueFromPipeline = $false,
@@ -121,7 +137,7 @@
         $Encoding = 'UTF8'
     )
     Begin {
-        # int local variables 
+        # int local variables
         [NPS.LogFile.Cache]::Data.Clear()
         $TypeName = "$($BaseType).$($Format)"
 
@@ -139,8 +155,8 @@
                         $InputObject,
                         [String[]]$Filter,
                         [String]$FilePath
-                    )            
-                    foreach ($Item in $InputObject) { 
+                    )
+                    foreach ($Item in $InputObject) {
                         if ($Filter) {
                             $process = $false
                             foreach ($FilterIdItem in ([NPS.LogFile.Lookup]::FilterPacketTypes[$Filter])) {
@@ -174,18 +190,18 @@
                         $InputObject,
                         [String[]]$Filter,
                         [String]$FilePath
-                    )            
+                    )
                     foreach ($Item in $InputObject) {
                         if ($Filter) {
                             $process = $false
                             foreach ($FilterIdItem in ([NPS.LogFile.Lookup]::FilterPacketTypes[$Filter])) {
                                 if ($item -like "*,4136,$($FilterIdItem),*") {
                                     $process = $true
-                                }    
+                                }
                             }
                             if (-not $process) { continue }
                         }
-                        
+
                         $DataTable = $Item -split ','
                         $Hash = [ordered]@{}
                         #First 6 positions are Header
@@ -195,12 +211,12 @@
                         $Hash.Add("RecordTime"  , $DataTable[3]) #The time that the log is written.
                         $Hash.Add("ServiceName" , $DataTable[4]) #The name of the service that is running on the RADIUS server.
                         $Hash.Add("ComputerName", $DataTable[5]) #The name of the RADIUS server.
-                        
+
                         $i = 6
                         do {
                             if ($DataTable[$i]) {
                                 $AttributeType = [NPS.LogFile.Lookup]::IasAttributeTypes["$($DataTable[$i])"]
-                                
+
                                 if ($AttributeType.GetType().Name -match 'Hashtable') {
                                     $AttributeName = $AttributeType.Name -replace '-|_'
                                     $AttributeValue = $AttributeType.Enumerator["$($DataTable[$i + 1])"]
@@ -220,21 +236,21 @@
                     }
                 }
             }
-            
+
             'ODBC' {
                 [System.Management.Automation.ScriptBlock]$ScriptBlock = {
                     Param(
                         $InputObject,
                         [String[]]$Filter,
                         [String]$FilePath
-                    )            
+                    )
                     foreach ($Item in $InputObject) {
                         if ($Filter) {
                             $process = $false
                             foreach ($FilterIdItem in ([NPS.LogFile.Lookup]::FilterPacketTypes[$Filter])) {
                                 if ($item -like "*,4136,$($FilterIdItem),*") {
                                     $process = $true
-                                }    
+                                }
                             }
                             if (-not $process) { continue }
                         }
@@ -248,7 +264,7 @@
                     }
                 }
             }
-            
+
             Default { Write-Error "Mistake by Developer"}
         }
     }
@@ -258,10 +274,10 @@
         foreach ($FilePath in $Path) {
             if (Test-Path -Path $FilePath) {
                 Write-Verbose "Open ""$($FilePath)"" from disk. (Encoding $($Encoding))"
-                
+
                 $File = [System.IO.File]::Open($FilePath, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::ReadWrite)
                 $FileContent = [System.IO.StreamReader]::new($File, [System.Text.Encoding]::$Encoding)
-                
+
                 if (($File.Length / 1MB) -gt 10) { [int]$BatchSize = 2000 } else { [int]$BatchSize = 200 }
                 $i = 0
                 $LineBuffer = New-object System.object[]($BatchSize) # create an array with buffer size
@@ -278,8 +294,8 @@
                         [void]$PowerShell.AddArgument($Filter)
                         [void]$PowerShell.AddArgument($FilePath)
                         $PowerShell.RunspacePool = $RunspacePool
-                        [void]$Runspaces.Add( 
-                            (New-Object -TypeName PSObject -Property @{ 
+                        [void]$Runspaces.Add(
+                            (New-Object -TypeName PSObject -Property @{
                                     Status     = $PowerShell.BeginInvoke()
                                     PowerShell = $PowerShell
                                     FilePath   = $FilePath
@@ -297,13 +313,13 @@
                 $File.Close()
             }
         }
-        
+
         Write-Debug "Waiting for finish $($Runspaces.count) datastream runspace(s)"
         $TotalCount = $Runspaces.count
         $Finished = 0
         While ($Runspaces) {
             $RunspacesToRemove = @()
-            Foreach ($Runspace in $Runspaces) { 
+            Foreach ($Runspace in $Runspaces) {
                 If ($Runspace.Status.IsCompleted) {
                     $Finished = $Finished + 1
                     Write-Progress -Activity "Working on $($Runspace.FilePath)" -Status "Finishing datastreams: $Finished of $($TotalCount)" -PercentComplete ($Finished / $TotalCount * 100)
@@ -312,8 +328,8 @@
                     $Results = $Runspace.PowerShell.EndInvoke($Runspace.Status)
                     $Runspace.PowerShell.Dispose()
                     $RunspacesToRemove += $Runspace
-                    
-                    foreach ($ResultItem in $Results) { 
+
+                    foreach ($ResultItem in $Results) {
                         $ResultItem.pstypenames.Insert(0, $BaseType)
                         $ResultItem.pstypenames.Insert(0, $TypeName)
                         if ($Format -like "DTS") {
@@ -325,22 +341,22 @@
                     }
                 }
             }
-            foreach ($RunspaceToRemove in $RunspacesToRemove) { 
+            foreach ($RunspaceToRemove in $RunspacesToRemove) {
                 Write-Debug "Runspace $($RunspaceToRemove.PowerShell.InstanceId) removed"
                 $Runspaces.Remove($RunspaceToRemove)
             }
             Remove-Variable RunspacesToRemove
         }
-        
+
     }
-    
+
     End {
         If ([NPS.LogFile.Cache]::Data) {
             switch ($Format) {
                 'DTS' {
-                    foreach ($DataItem in [NPS.LogFile.Cache]::Data.Keys) { 
+                    foreach ($DataItem in [NPS.LogFile.Cache]::Data.Keys) {
                         $PropertyList = [NPS.LogFile.Cache]::Data[$DataItem]
-                        foreach ($Property in $PropertyList) { 
+                        foreach ($Property in $PropertyList) {
                             Update-TypeData -TypeName "$($TypeName).$($DataItem)" -MemberType ScriptProperty -Force -MemberName ($Property -replace '-|_') -Value ([scriptblock]::Create( "`$this.Event.'$Property'.'#text'" ))
                         }
                     }

@@ -1,4 +1,4 @@
-New-PSFLicense -Product 'NPSLogFile' -Manufacturer 'Andreas Bellstedt' -ProductVersion $ModuleVersion -ProductType Module -Name MIT -Version "1.0.0.0" -Date (Get-Date "2018-08-13") -Text @"
+﻿New-PSFLicense -Product 'NPSLogFile' -Manufacturer 'Andreas Bellstedt' -ProductVersion $ModuleVersion -ProductType Module -Name MIT -Version "1.0.0.0" -Date (Get-Date "2018-08-13") -Text @"
 Copyright (c) 2017 Andreas Bellstedt
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

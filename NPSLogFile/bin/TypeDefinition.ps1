@@ -1,4 +1,4 @@
-Add-Type -TypeDefinition @"
+﻿Add-Type -TypeDefinition @"
 namespace NPS {
     namespace LogFile {
         public static class Cache {
