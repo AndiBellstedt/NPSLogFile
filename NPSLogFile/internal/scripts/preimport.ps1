@@ -1,3 +1,3 @@
 ﻿# Add all things you want to run before importing the main code
 
-. Import-ModuleFile -Path "$ModuleRoot\bin\TypeDefinition.ps1"
+. "$ModuleRoot\bin\TypeDefinition.ps1"
