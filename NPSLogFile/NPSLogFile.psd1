@@ -15,17 +15,10 @@
     CompanyName       = ''
 
     # Copyright statement for this module
-    Copyright         = '(c) 2017 - Andreas Bellstedt. All rights reserved.'
+    Copyright         = 'Copyright (c) 2017 Andreas Bellstedt'
 
     # Description of the functionality provided by this module
-    Description       = @'
-Module for interpreting NPS Logfiles in PowerShell.
-
-All cmdlets are build with
-- powershell regular verbs
-- with pipeling availabilties where it is practical
-- logging on verbose channel
-'@
+    Description       = 'Module for interpreting NPS/IAS Logfiles in PowerShell.'
 
     # Minimum version of the Windows PowerShell engine required by this module
     PowerShellVersion = '4.0'
@@ -92,7 +85,16 @@ All cmdlets are build with
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags         = @('NPS', 'NPSLog', 'NPSLogFile', 'LogFile', 'PowerShell', 'Automation', 'Logging')
+            Tags         = @(
+                'IAS',
+                'NPS',
+                'NPSLog',
+                'NPSLogFile',
+                'LogFile',
+                'Automation',
+                'NetworkPolicyServer',
+                'Logging'
+            )
 
             # A URL to the license for this module.
             LicenseUri   = 'https://github.com/AndiBellstedt/NPSLogFile/blob/master/license'
@@ -101,21 +103,12 @@ All cmdlets are build with
             ProjectUri   = 'https://github.com/AndiBellstedt/NPSLogFile'
 
             # A URL to an icon representing this module.
-            # IconUri = ''
+            IconUri      = 'https://github.com/AndiBellstedt/NPSLogFile/raw/Development/assets/NPSLogFile_128x128.png'
 
             # ReleaseNotes of this module
-            ReleaseNotes = @'
-Hopefully some other people may benefit from my work and investigation.
-
-Further release- and changenotes will be tracked in my github repo.
-https://github.com/AndiBellstedt/NPSLogFile
-
-'@
+            ReleaseNotes = 'https://github.com/AndiBellstedt/ExchangeLogs/blob/master/ExchangeLogs/changelog.md'
 
         } # End of PSData hashtable
 
     } # End of PrivateData hashtable
-
-    # HelpInfo URI of this module
-    HelpInfoURI       = 'https://github.com/AndiBellstedt/NPSLogFile'
 }
