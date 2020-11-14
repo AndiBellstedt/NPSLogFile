@@ -1,11 +1,11 @@
 ﻿TOPIC
-	about_NPSLogFile
+    about_NPSLogFile
 
 SHORT DESCRIPTION
-	Explains how to use the NPSLogFile powershell module
+    Import logfiles from NPS service on windows Servers with the NPSLogFile powershell module
 
 LONG DESCRIPTION
-	<Insert Content here>
+    Import logfiles from NPS service on windows Servers with the NPSLogFile powershell module
 
 KEYWORDS
-	NPSLogFile
+    NPSLogFile
