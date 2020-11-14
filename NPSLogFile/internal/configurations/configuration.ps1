@@ -1,41 +1,16 @@
-﻿#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-# Modul "NPSLogFile"
-# Author:  Andreas Bellstedt
+﻿<#
+This is an example configuration file
 
-#region type defintion
-#---------------------
-Add-Type -TypeDefinition @"
-namespace NPS {
-    namespace LogFile {
-        public static class Cache {
-            public static System.Collections.Hashtable Data = new System.Collections.Hashtable();
-        }
+By default, it is enough to have a single one of them,
+however if you have enough configuration settings to justify having multiple copies of it,
+feel totally free to split them into multiple files.
+#>
 
-        public static class Lookup {
-            public static System.Collections.Hashtable AuthenticationSource = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable AuthenticationTypes = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable FilterPacketTypes = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable NasPortTypes = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable PacketTypes = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable ReasonCodes = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable IasAttributeTypes = new System.Collections.Hashtable();
-        }
-    }
-}
-"@
+<#
+# Example Configuration
+Set-PSFConfig -Module 'NPSLogFile' -Name 'Example.Setting' -Value 10 -Initialize -Validation 'integer' -Handler { } -Description "Example configuration setting. Your module can then use the setting using 'Get-PSFConfigValue'"
+#>
 
-#endregion type defintion
-
-
-#region Constants
-#--------------------------
-New-Variable -Option ReadOnly, Constant -Scope Script -Name BaseType -Value "NPS.LogFile"
 
 [NPS.LogFile.Lookup]::FilterPacketTypes = @{
     'Access-Request'                             = 1
@@ -489,7 +464,7 @@ http://www.deepsoftware.com/iasviewer/attributeslist.html
             "11"    = "Bay Dial Virtual Services (DVS)"
             "12"    = "IP-in-IP Tunneling"
             "13"    = "Virtual LANs (VLAN)"
-            "79617" = "Secure Socket Tunneling Protocol (SSTP)"            
+            "79617" = "Secure Socket Tunneling Protocol (SSTP)"
         }
     }
     "65"   = @{
@@ -892,7 +867,7 @@ http://www.deepsoftware.com/iasviewer/attributeslist.html
         Name       = "Reason-Code"
         Enumerator = @{
             "0"   = "Success"
-            "1"   = "Internal error" 
+            "1"   = "Internal error"
             "2"   = "Access denied"
             "3"   = "Malformed request"
             "4"   = "Global catalog unavailable"
@@ -912,7 +887,7 @@ http://www.deepsoftware.com/iasviewer/attributeslist.html
             "23"  = "Unexpected error. Possible error in server or client configuration."
             "32"  = "Local users only"
             "33"  = "Password must be changed"
-            "34"  = "Account disabled" 
+            "34"  = "Account disabled"
             "35"  = "Account expired"
             "36"  = "Account locked out"
             "37"  = "Logon hours are not valid"
@@ -922,7 +897,7 @@ http://www.deepsoftware.com/iasviewer/attributeslist.html
             "64"  = "Dial-in locked out"
             "65"  = "Dial-in disabled"
             "66"  = "Authentication type is not valid"
-            "67"  = "Calling station is not valid" 
+            "67"  = "Calling station is not valid"
             "68"  = "Dial-in hours are not valid"
             "69"  = "Called station is not valid"
             "70"  = "Port type is not valid"
@@ -1161,19 +1136,3 @@ http://www.deepsoftware.com/iasviewer/attributeslist.html
     "8165" = "User-IPv6-Address"
     "8166" = "TSG-Device-Redirection"
 }
-
-#endregion
-
-#region basic functions
-#----------------------
-. $psscriptroot\scripts\Get-NPSLog.ps1
-
-#endregion
-
-
-#region Helper functions
-#-----------------------
-
-#endregion
-
-Export-ModuleMember -Function *-NPS**
