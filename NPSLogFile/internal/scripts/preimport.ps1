@@ -1,21 +1,14 @@
-﻿# Add all things you want to run before importing the main code
+﻿<#
+Add all things you want to run before importing the main function code.
 
-Add-Type -TypeDefinition @"
-namespace NPS {
-    namespace LogFile {
-        public static class Cache {
-            public static System.Collections.Hashtable Data = new System.Collections.Hashtable();
-        }
+WARNING: ONLY provide paths to files!
 
-        public static class Lookup {
-            public static System.Collections.Hashtable AuthenticationSource = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable AuthenticationTypes = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable FilterPacketTypes = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable NasPortTypes = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable PacketTypes = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable ReasonCodes = new System.Collections.Hashtable();
-            public static System.Collections.Hashtable IasAttributeTypes = new System.Collections.Hashtable();
-        }
-    }
-}
-"@
+After building the module, this file will be completely ignored, adding anything but paths to files ...
+- Will not work after publishing
+- Could break the build process
+#>
+
+$moduleRoot = Split-Path (Split-Path $PSScriptRoot)
+
+# Load the strings used in messages
+"$moduleRoot\internal\scripts\strings.ps1"
