@@ -3,7 +3,7 @@
     RootModule        = 'NPSLogFile.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.0.0.0'
+    ModuleVersion     = '1.0.0.1'
 
     # ID used to uniquely identify this module
     GUID              = '6dc7831e-141b-4d35-9868-10c023efe87b'
