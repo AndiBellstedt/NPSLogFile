@@ -1,4 +1,10 @@
 # Changelog
+## 1.0.0.1 (2020-11-18)
+- No functional changes
+- Fix: Fixing some typos
+- Fix: Remove files and command depend on PSFramework
+- Upd: Add plattform and statistic information to readme file
+
 ## 1.0.0 Inital module release
 - New: Get-NPSLog
 

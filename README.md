@@ -1,6 +1,12 @@
 ![logo][]
 # NPSLogFile - Getting insights from network policy services
+| Plattform | Information |
+| --------- | ----------- |
+| PowerShell gallery | [![PowerShell Gallery](https://img.shields.io/powershellgallery/v/NPSLogFile?label=psgallery)](https://www.powershellgallery.com/packages/NPSLogFile) [![PowerShell Gallery](https://img.shields.io/powershellgallery/p/NPSLogFile)](https://www.powershellgallery.com/packages/NPSLogFile) [![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/NPSLogFile?style=plastic)](https://www.powershellgallery.com/packages/NPSLogFile) |
+| GitHub  | [![GitHub release](https://img.shields.io/github/release/AndiBellstedt/NPSLogFile.svg)](https://github.com/AndiBellstedt/NPSLogFile/releases/latest) ![GitHub](https://img.shields.io/github/license/AndiBellstedt/NPSLogFile?style=plastic) <br> ![GitHub issues](https://img.shields.io/github/issues-raw/AndiBellstedt/NPSLogFile?style=plastic) <br> ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/AndiBellstedt/NPSLogFile/master?label=last%20commit%3A%20master&style=plastic) <br> ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/AndiBellstedt/NPSLogFile/development?label=last%20commit%3A%20development&style=plastic) |
+<br>
 
+## Description
 A PowerShell module for parsing nps/ias log files.
 
 Basically, the module only contains only one command:

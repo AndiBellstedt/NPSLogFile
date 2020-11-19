@@ -3,7 +3,7 @@
     RootModule        = 'NPSLogFile.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.0.0.0'
+    ModuleVersion     = '1.0.0.1'
 
     # ID used to uniquely identify this module
     GUID              = '6dc7831e-141b-4d35-9868-10c023efe87b'
@@ -91,9 +91,12 @@
                 'NPSLog',
                 'NPSLogFile',
                 'LogFile',
+                'LogFiles',
                 'Automation',
                 'NetworkPolicyServer',
-                'Logging'
+                'Logging',
+                'PSEdition_Desktop',
+                'Windows'
             )
 
             # A URL to the license for this module.
@@ -106,7 +109,7 @@
             IconUri      = 'https://github.com/AndiBellstedt/NPSLogFile/raw/Development/assets/NPSLogFile_128x128.png'
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'https://github.com/AndiBellstedt/ExchangeLogs/blob/master/ExchangeLogs/changelog.md'
+            ReleaseNotes = 'https://github.com/AndiBellstedt/NPSLogFile/blob/master/NPSLogFile/changelog.md'
 
         } # End of PSData hashtable
 
