@@ -3,7 +3,7 @@
     RootModule        = 'NPSLogFile.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.0.0.1'
+    ModuleVersion     = '1.0.1.0'
 
     # ID used to uniquely identify this module
     GUID              = '6dc7831e-141b-4d35-9868-10c023efe87b'
@@ -59,10 +59,8 @@
 
     # Modules to import as nested modules of the module specified in
     # ModuleToProcess
-    # NestedModules = @()
-
-    # Functions to export from this module
-    FunctionsToExport = 'Get-NPSLog'
+    # NestedModules = @()    # Functions to export from this module
+    FunctionsToExport = @('Get-NPSLog', 'Show-NPSLogViewer')
 
     # Cmdlets to export from this module
     CmdletsToExport   = ''
