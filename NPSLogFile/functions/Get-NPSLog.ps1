@@ -1,40 +1,40 @@
 ﻿function Get-NPSLog {
     <#
     .Synopsis
-       Get NPS logfiles in various formats.
+        Get NPS logfiles in various formats.
 
     .DESCRIPTION
-       Get NPS logfiles and put it into readable powershell objects.
-       All available logfile formats from NPS are supportet by parameter 'Format'.
+        Get NPS logfiles and put it into readable powershell objects.
+        All available logfile formats from NPS are supportet by parameter 'Format'.
 
     .INPUTS
-       Cmdlet accept string values. Pipelineinput has to be the path to a logfile
+        Cmdlet accept string values. Pipelineinput has to be the path to a logfile
 
     .OUTPUTS
-       Cmdlet outputs a custom psobject with own typename in namespace NPS.LogFile
+        Cmdlet outputs a custom psobject with own typename in namespace NPS.LogFile
 
     .NOTES
-       Helpfull sources
-       ----------------
-       Interpret the different formats:
-       DTS format --> https://technet.microsoft.com/en-us/library/cc771748(v=ws.10).aspx#Anchor_1
-       IAS format --> https://technet.microsoft.com/de-de/library/dd197432(v=ws.10).aspx
-       ODBC format --> https://technet.microsoft.com/en-us/library/cc771748(v=ws.10).aspx
-       RADIUS Packet format --> https://technet.microsoft.com/en-us/library/cc958030.aspx
-       IANA defintion --> http://www.iana.org/assignments/radius-types/radius-types.xhtml
-       Health Validator Records interpretierne --> https://technet.microsoft.com/en-us/library/cc730901(v=ws.10).aspx
+        Helpfull sources
+        ----------------
+        Interpret the different formats:
+        DTS format --> https://technet.microsoft.com/en-us/library/cc771748(v=ws.10).aspx#Anchor_1
+        IAS format --> https://technet.microsoft.com/de-de/library/dd197432(v=ws.10).aspx
+        ODBC format --> https://technet.microsoft.com/en-us/library/cc771748(v=ws.10).aspx
+        RADIUS Packet format --> https://technet.microsoft.com/en-us/library/cc958030.aspx
+        IANA defintion --> http://www.iana.org/assignments/radius-types/radius-types.xhtml
+        Health Validator Records interpretierne --> https://technet.microsoft.com/en-us/library/cc730901(v=ws.10).aspx
 
-       Existing script MS NPS/RADIUS Logs Interpreter:
-       https://gallery.technet.microsoft.com/MS-NPSRADIUS-Logs-b68af449
+        Existing script MS NPS/RADIUS Logs Interpreter:
+        https://gallery.technet.microsoft.com/MS-NPSRADIUS-Logs-b68af449
 
-       Runspaces:
-       https://gist.github.com/proxb/803fee30f0df244fd850
-       https://learn-powershell.net/2016/02/14/another-way-to-get-output-from-a-powershell-runspace/
-       https://learn-powershell.net/2016/11/28/yet-another-way-to-get-output-from-a-runspace-reflection-edition/
-       https://github.com/psconfeu/2016s
+        Runspaces:
+        https://gist.github.com/proxb/803fee30f0df244fd850
+        https://learn-powershell.net/2016/02/14/another-way-to-get-output-from-a-powershell-runspace/
+        https://learn-powershell.net/2016/11/28/yet-another-way-to-get-output-from-a-runspace-reflection-edition/
+        https://github.com/psconfeu/2016s
 
     .LINK
-       https://github.com/AndiBellstedt/
+        https://github.com/AndiBellstedt/
 
     .PARAMETER Path
         The logfile to gather data from.
@@ -57,29 +57,29 @@
         If this switch is enabled, no actions are performed but informational messages will be displayed that explain what would happen if the command were to run.
 
     .EXAMPLE
-       Get-NPSLog C:\Windows\System32\LogFiles\IN170901.log
-       By default the cmdlet will get the entries from the logfile in DTS format with UTF8 encoding.
+        Get-NPSLog C:\Windows\System32\LogFiles\IN170901.log
+        By default the cmdlet will get the entries from the logfile in DTS format with UTF8 encoding.
 
     .EXAMPLE
-       Get-NPSLog -Path C:\Windows\System32\LogFiles\IN170901.log -Format DTS -Encoding UTF8
-       This is an example of the even more specific call for the cmdlet. From the functional point, is it the same from Example 1.
+        Get-NPSLog -Path C:\Windows\System32\LogFiles\IN170901.log -Format DTS -Encoding UTF8
+        This is an example of the even more specific call for the cmdlet. From the functional point, is it the same from Example 1.
 
     .EXAMPLE
-       Get-NPSLog -Path C:\Windows\System32\LogFiles\IN170901.log -Format IAS -Encoding UTF8
-       This will get the entries from the logfile in IAS format with UTF8 encoding.
+        Get-NPSLog -Path C:\Windows\System32\LogFiles\IN170901.log -Format IAS -Encoding UTF8
+        This will get the entries from the logfile in IAS format with UTF8 encoding.
 
     .EXAMPLE
-       Get-NPSLog -Path C:\Windows\System32\LogFiles\IN170901.log -Format ODBC -Encoding UTF8
-       This will get the entries from the logfile in ODBC format with UTF8 encoding.
+        Get-NPSLog -Path C:\Windows\System32\LogFiles\IN170901.log -Format ODBC -Encoding UTF8
+        This will get the entries from the logfile in ODBC format with UTF8 encoding.
 
     .EXAMPLE
-       Get-NPSLog -Path C:\Windows\System32\LogFiles\IN170901.log -Format DTS -Encoding UTF8 -Filter Access-Reject, Access-Accept
-       This will return only "reject" and "accept" entries from the logfile.
-       Adding filter parameter will slightly speed up the parsing of larger files.
+        Get-NPSLog -Path C:\Windows\System32\LogFiles\IN170901.log -Format DTS -Encoding UTF8 -Filter Access-Reject, Access-Accept
+        This will return only "reject" and "accept" entries from the logfile.
+        Adding filter parameter will slightly speed up the parsing of larger files.
 
     .EXAMPLE
-       Get-ChildItem C:\Windows\System32\LogFiles\IN*.log | Get-NPSLog
-       Parse all logfiles from "C:\Windows\System32\LogFiles". The cmdlet assumes the files in DTS format with UTF8 encoding, because the is the default.
+        Get-ChildItem C:\Windows\System32\LogFiles\IN*.log | Get-NPSLog
+        Parse all logfiles from "C:\Windows\System32\LogFiles". The cmdlet assumes the files in DTS format with UTF8 encoding, because the is the default.
 
     #>
     [CmdletBinding(DefaultParameterSetName = 'DefaultParameterSet',
